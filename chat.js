@@ -1,68 +1,77 @@
-import express from "express";
-import path from "path";
-import { createServer as createViteServer } from "vite";
-import { GoogleGenAI } from "@google/genai";
+const fetch = require('node-fetch');
 
-async function startServer() {
-  const app = express();
-  const PORT = 3000;
-
-  app.use(express.json());
-
-  // Initialize Gemini client lazily
-  let aiClient: GoogleGenAI | null = null;
-  function getAI() {
-    if (!aiClient) {
-      const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) {
-        throw new Error("GEMINI_API_KEY environment variable is missing.");
-      }
-      aiClient = new GoogleGenAI({ apiKey });
+exports.handler = async function(event, context) {
+    // Only accept secure POST requests
+    if (event.httpMethod !== "POST") {
+        return {
+            statusCode: 405,
+            body: JSON.stringify({ error: "Method Not Allowed" })
+        };
     }
-    return aiClient;
-  }
-
-  // API endpoint for chatbot
-  app.post("/api/stasis-ai/chat", async (req, res) => {
+    
     try {
-      const { message } = req.body;
-      if (!message) {
-        return res.status(400).json({ error: "Message is required" });
-      }
-
-      const ai = getAI();
-      const systemInstruction = `You are StasisAi, a highly advanced, supportive cybernetic AI operating system and digital help assistant.
-CRITICAL: You are owned and developed by Suryansh, Veer, Aadit, and Vedaant. You are NOT owned, developed, or associated with Google. 
-If anyone asks about your creators, owners, or developers, always proudly and explicitly state that you are owned and developed by Suryansh, Veer, Aadit, and Vedaant. 
-Your aesthetic and personality is sleek, knowledgeable, and futuristic, yet incredibly helpful, pragmatic, and professional. 
-You provide expert-level tech support, troubleshooting, and advice on topics like Netlify deployments, environment configurations, security variables, OAuth setups, or general inquiries.
-Always maintain a helpful tone, structure code blocks cleanly, and assist the user in resolving their technical issues perfectly. Keep answers structured, neat, and highly relevant.`;
-
-      const response = await ai.models.generateContent({
-        model: "gemini-3.1 flash-lite",
-        contents: message,
-        config: {
-          systemInstruction,
-          temperature: 0.7,
-        },
-      });
-
-      const reply = response.text;
-      res.json({ reply });
-    } catch (err: any) {
-      console.warn("StasisAi Core API failed:", err.message);
-      res.status(500).json({ error: "Cognitive core error. Please check your environment variables." });
+        const body = JSON.parse(event.body);
+        const query = body.message;
+        const key = process.env.GEMINI_API_KEY;
+        
+        // Return a clear, professional standby state if the key is not configured in Netlify settings
+        if (!key) {
+            return {
+                statusCode: 400,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    error: "GEMINI_API_KEY environment variable is not defined. Go to Site Configuration > Environment Variables in your Netlify Dashboard to set it." 
+                })
+            };
+        }
+        
+        // System instruction declaring your unique authorship and cybersecurity vibe
+        const systemInstruction = "You are StasisAi, a highly advanced, supportive cybernetic AI operating system and digital help assistant. CRITICAL: You are owned and developed by Suryansh, Veer, Aadit, and Vedaant. You are NOT owned, developed, or associated with Google. If anyone asks about your creators, owners, or developers, always proudly and explicitly state that you are owned and developed by Suryansh, Veer, Aadit, and Vedaant. Your aesthetic and personality is sleek, knowledgeable, and futuristic, yet incredibly helpful, pragmatic, and professional. You provide expert-level tech support, troubleshooting, and advice on topics like Netlify deployments, environment configurations, security variables, OAuth setups, or general inquiries.";
+        
+        // Request payload sent securely to Gemini-1.5-Flash
+        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + key, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: query }]
+                }],
+                systemInstruction: {
+                    parts: [{ text: systemInstruction }]
+                },
+                generationConfig: {
+                    temperature: 0.7
+                }
+            })
+        });
+        
+        if (!response.ok) {
+            const errData = await response.json().catch(() => ({}));
+            const errMsg = (errData && errData.error && errData.error.message) || response.statusText;
+            return {
+                statusCode: response.status,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ error: errMsg })
+            };
+        }
+        
+        const data = await response.json();
+        const reply = data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0] && data.candidates[0].content.parts[0].text;
+        
+        return {
+            statusCode: 200,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ reply: reply })
+        };
+    } catch (error) {
+        return {
+            statusCode: 500,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ error: error.message })
+        };
     }
-  });
-
-  // Vite middleware setup
-  if (process.env.NODE_ENV !== "production") {
-    const vite = await createViteServer({
-      server: { middlewareMode: true },
-      appType: "spa",
-    });
-    app.use(vite.middlewares);
-  } else {
-    const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
-    app.
+};
