@@ -1,6 +1,6 @@
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/api/stasis-ai/chat"
+  to = "/.netlify/functions/chat"
   status = 200
 
 [headers]
