@@ -1,0 +1,13 @@
+{
+  "name": "stasis-ai-help-hub",
+  "version": "1.0.0",
+  "description": "Sleek, dark neon-themed Digital Help Hub with AI Support Capabilities",
+  "main": "index.html",
+  "scripts": {
+    "start": "echo 'Deploy static folder directly to Netlify or GitHub Pages!'"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "author": "Operator-01",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StasisAI - Cybernetic Help Hub</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Grid Effect -->
+    <div class="cyber-grid"></div>
+    <div class="glow-radial"></div>
+
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-triangle-exclamation neon-text pulse"></i>
+                </div>
+                <div class="brand-info">
+                    <span class="brand-name">Stasis<span class="neon-accent">Ai</span></span>
+                    <span class="brand-tag">HELP HUB CORE v1.0</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </button>
+                <button class="nav-item" data-tab="chat">
+                    <i class="fa-solid fa-headset"></i> StasisAI Agent
+                </button>
+                <button class="nav-item" data-tab="kb">
+                    <i class="fa-solid fa-book-bookmark"></i> Knowledge Base
+                </button>
+                <button class="nav-item" data-tab="diagnostics">
+                    <i class="fa-solid fa-terminal"></i> Core Scan
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="pulse-dot"></span>
+                    <span>ALL CORES NOMINAL</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Bar Header -->
+            <header class="top-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" placeholder="Search knowledge base or run command..." id="topSearch">
+                </div>
+                <div class="header-actions">
+                    <div class="node-indicator">
+                        <span class="node-badge">NODE: NETLIFY-MAIN</span>
+                    </div>
+                    <div class="user-profile">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Operator" class="avatar">
+                        <span class="user-name">OPERATOR_01</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard" class="tab-view active">
+                <div class="welcome-banner">
+                    <h1 class="glow-title">Cybernetic Support Grid</h1>
+                    <p class="subtitle">StasisAi is operational. Welcome to your general information and neural support hub.</p>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card neon-border">
+                        <div class="metric-icon"><i class="fa-solid fa-bolt neon-text"></i></div>
+                        <div class="metric-value" id="respTime">0.12s</div>
+                        <div class="metric-label">AI RESPONSE LATENCY</div>
+                        <div class="metric-trend text-cyan"><i class="fa-solid fa-chevron-down"></i> -15% optimal</div>
+                    </div>
+                    <div class="metric-card neon-border">
+                        <div class="metric-icon"><i class="fa-solid fa-shield-halved text-blue"></i></div>
+                        <div class="metric-value">99.98%</div>
+                        <div class="metric-label">SECURITY INTEGRITY</div>
+                        <div class="metric-trend text-blue">CYBER-SHIELD ARMED</div>
+                    </div>
+                    <div class="metric-card neon-border">
+                        <div class="metric-icon"><i class="fa-solid fa-microchip text-indigo"></i></div>
+                        <div class="metric-value" id="systemLoad">24.2%</div>
+                        <div class="metric-label">COGNITIVE ENGINE LOAD</div>
+                        <div class="metric-trend text-indigo"><span class="pulse-dot-cyan"></span> Active Node</div>
+                    </div>
+                </div>
+
+                <div class="dashboard-bento">
+                    <!-- Recommended Support Workflows -->
+                    <div class="bento-card bento-wide neon-border">
+                        <h3><i class="fa-solid fa-circle-nodes"></i> Quick Core Diagnostic Triggers</h3>
+                        <p class="card-desc text-muted">Instantly activate diagnostic support scripts. Select a profile below:</p>
+                        <div class="diagnostic-grid">
+                            <div class="diag-chip" onclick="triggerQuickScan('Network Integrity Check')">
+                                <i class="fa-solid fa-wifi text-cyan"></i>
+                                <span>Network Scan</span>
+                            </div>
+                            <div class="diag-chip" onclick="triggerQuickScan('Authentication Node Reset')">
+                                <i class="fa-solid fa-key text-blue"></i>
+                                <span>Auth Reset</span>
+                            </div>
+                            <div class="diag-chip" onclick="triggerQuickScan('Cognitive Memory Decouple')">
+                                <i class="fa-solid fa-brain text-indigo"></i>
+                                <span>Memory Scan</span>
+                            </div>
+                            <div class="diag-chip" onclick="triggerQuickScan('Database Sync Audit')">
+                                <i class="fa-solid fa-database text-cyan"></i>
+                                <span>DB Sync Audit</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Notifications -->
+                    <div class="bento-card neon-border">
+                        <h3><i class="fa-solid fa-bell"></i> System Bulletins</h3>
+                        <ul class="bulletin-list">
+                            <li>
+                                <span class="bulletin-time">10:45 UTC</span>
+                                <span class="bulletin-text">Security node upgrade completed across all Netlify instances.</span>
+                            </li>
+                            <li>
+                                <span class="bulletin-time">08:12 UTC</span>
+                                <span class="bulletin-text">StasisAi language model version upgraded to V3.5-Active.</span>
+                            </li>
+                            <li>
+                                <span class="bulletin-time">Yesterday</span>
+                                <span class="bulletin-text">New knowledge base articles indexed regarding API keys.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- StasisAI Live Chat View -->
+            <section id="chat" class="tab-view">
+                <div class="chat-container neon-border">
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <span class="status-indicator-green"></span>
+                            <div>
+                                <h4>StasisAi Autonomous Core</h4>
+                                <p class="text-xs text-muted">Advanced Neural Support Assistant</p>
+                            </div>
+                        </div>
+                        <button class="chat-action-btn" onclick="clearConversation()" title="Reset Interface">
+                            <i class="fa-solid fa-rotate-left"></i> Reset Chat
+                        </button>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message assistant">
+                            <div class="message-avatar">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <p>Greetings Operator. I am <strong>StasisAi</strong>, your unified support interface. I can help diagnose connection anomalies, assist with credentials, resolve platform queries, or answer general informational prompts. What system requires attention?</p>
+                                <span class="message-time">SYSTEM ONLINE</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chat-suggestion-container">
+                        <button class="chat-chip" onclick="sendSuggestion('How do I configure my environment variables on Netlify?')">Netlify Env Config</button>
+                        <button class="chat-chip" onclick="sendSuggestion('Help me set up an OAuth client redirect')">OAuth Redirect Setup</button>
+                        <button class="chat-chip" onclick="sendSuggestion('Diagnose high database response latency')">DB Latency Check</button>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <input type="text" placeholder="Inquire or enter terminal command..." id="chatInput" onkeydown="handleChatKey(event)">
+                        <button class="send-btn" onclick="submitMessage()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Knowledge Base View -->
+            <section id="kb" class="tab-view">
+                <div class="section-title">
+                    <h2><i class="fa-solid fa-book"></i> Interactive Knowledge Base</h2>
+                    <p class="text-muted">Direct indexed support resources for StasisAi and modern hosting systems.</p>
+                </div>
+
+                <div class="kb-categories">
+                    <button class="kb-tab-btn active" data-cat="all">All Logs</button>
+                    <button class="kb-tab-btn" data-cat="hosting">Hosting & Deployment</button>
+                    <button class="kb-tab-btn" data-cat="security">Security & Auth</button>
+                    <button class="kb-tab-btn" data-cat="ai">AI Integrations</button>
+                </div>
+
+                <div class="kb-grid" id="kbGrid">
+                    <!-- Article 1 -->
+                    <div class="kb-card neon-border" data-category="hosting">
+                        <div class="kb-tag">HOSTING</div>
+                        <h3>Netlify Environment Deployment</h3>
+                        <p class="kb-excerpt">Learn how to declare sensitive environment variables on Netlify so StasisAi connects securely to external keys.</p>
+                        <button class="kb-action-btn" onclick="askAboutKB('How do I configure environment variables on Netlify?')">
+                            <i class="fa-solid fa-robot"></i> Query AI
+                        </button>
+                    </div>
+                    <!-- Article 2 -->
+                    <div class="kb-card neon-border" data-category="security">
+                        <div class="kb-tag">SECURITY</div>
+                        <h3>OAuth State Management</h3>
+                        <p class="kb-excerpt">Understanding redirect loops, framing boundaries inside sandboxed previews, and preserving cookies across redirects.</p>
+                        <button class="kb-action-btn" onclick="askAboutKB('Can you explain OAuth state management?')">
+                            <i class="fa-solid fa-robot"></i> Query AI
+                        </button>
+                    </div>
+                    <!-- Article 3 -->
+                    <div class="kb-card neon-border" data-category="ai">
+                        <div class="kb-tag">INTEGRATIONS</div>
+                        <h3>Gemini 3.5 API Implementation</h3>
+                        <p class="kb-excerpt">Integrating server-side SDKs securely, maintaining session histories, and rendering real-time streaming tokens.</p>
+                        <button class="kb-action-btn" onclick="askAboutKB('How do I integrate Gemini 3.5 API server-side?')">
+                            <i class="fa-solid fa-robot"></i> Query AI
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Diagnostics Console View -->
+            <section id="diagnostics" class="tab-view">
+                <div class="terminal-container neon-border">
+                    <div class="terminal-header">
+                        <div class="terminal-title">
+                            <i class="fa-solid fa-terminal text-cyan"></i> Core diagnostic_system_v1.0.sh
+                        </div>
+                        <div class="terminal-controls">
+                            <span class="control-dot red"></span>
+                            <span class="control-dot yellow"></span>
+                            <span class="control-dot green"></span>
+                        </div>
+                    </div>
+                    <div class="terminal-body" id="terminalLogs">
+                        <div class="term-line system-text">STASISAI ACTIVE CORE CONSOLE LOADED...</div>
+                        <div class="term-line">Enter command or select a quick script in Dashboard to execute logs.</div>
+                        <div class="term-line text-muted">Ready for operator commands...</div>
+                    </div>
+                    <div class="terminal-input-bar">
+                        <span class="prompt-symbol">$</span>
+                        <input type="text" id="terminalInput" placeholder="run command (e.g., check-cores, audit-security, clear)..." onkeydown="handleTerminalKey(event)">
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="chat.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
