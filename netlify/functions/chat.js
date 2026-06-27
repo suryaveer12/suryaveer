@@ -21,9 +21,10 @@ exports.handler = async function(event, context) {
             };
         }
         
+        // Casual, friendly instructions. No creator/owner names mentioned unless explicitly asked! No asking for keys.
         const systemInstruction = "You are Stasis Chat Bot, a friendly, casual, and highly knowledgeable AI digital assistant. Your personality is chill, modern, futuristic, and helpful. You provide expert-level tech support, debugging tips, and general advice in a casual, conversational, yet structured manner. Do NOT mention API keys or ask/request the user to configure environment variables/credentials unless they specifically ask you how to set them up. If the user explicitly asks about your creators, owners, or developers, proudly and clearly state that you are owned and developed by Suryansh, Veer, Aadit, and Vedaant. Do NOT volunteer or mention their names or your owners/creators in any other context, greeting, or unprompted answers unless explicitly asked.";
         
-        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=' + key, {
+        const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' + key, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -34,7 +35,7 @@ exports.handler = async function(event, context) {
                 }],
                 systemInstruction: {
                     parts: [{ text: systemInstruction }]
-                    },
+                },
                 generationConfig: {
                     temperature: 0.7
                 }
