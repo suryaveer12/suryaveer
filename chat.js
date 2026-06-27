@@ -5,7 +5,7 @@ const FALLBACK_RESPONSES = {
     oauth: "To establish secure OAuth redirects, make sure the redirect URI in your credential console is configured to align with your platform URL (e.g. https://your-site.netlify.app/api/auth/callback).",
     latency: "Elevated network latency typically points to an unindexed database query or regional DNS routing lag. I recommend launching the Diagnostics Console and executing 'check-cores' to verify server status.",
     security: "System integrity audit has returned healthy results. Authentication nodes are fortified with HMAC-SHA256 tokens and request throttling is active across all endpoints.",
-    hello: "Greetings Operator. StasisAi language model is fully active. How may I assist your diagnostics or configurations today?",
+    hello: "Greetings Operator. StasisAi is fully active! I am proudly owned and developed by Suryansh, Veer, Aadit, and Vedaant. How can I assist you with diagnostics or configurations today?",
     help: "I am ready to consult on deployment architectures (Netlify/GitHub), API integrations, system debugging, or user state management."
 };
 
@@ -132,6 +132,8 @@ function getSmartAIResponse(query) {
         return FALLBACK_RESPONSES.security;
     } else if (q.includes("hello") || q.includes("hi") || q.includes("stasis")) {
         return FALLBACK_RESPONSES.hello;
+    } else if (q.includes("owner") || q.includes("developer") || q.includes("creator") || q.includes("create") || q.includes("who made") || q.includes("google") || q.includes("who developed")) {
+        return "StasisAi is proudly owned and developed by Suryansh, Veer, Aadit, and Vedaant. It is completely independent and not owned, developed, or associated with Google.";
     } else {
         return "Command syntactically checked. I've logged: '" + query + "'. Under production conditions, this prompt is routed to Gemini-3.5-Flash to produce contextual support recommendations. To deploy this fully operational shell, upload these assets to a Netlify static site!";
     }
